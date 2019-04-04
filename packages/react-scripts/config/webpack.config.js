@@ -284,13 +284,13 @@ module.exports = function(webpackEnv) {
       // https://github.com/facebook/create-react-app/issues/290
       // `web` extension prefixes have been added for better support
       // for React Native Web.
-      extensions: ['.ts', '.tsx', '.js', '.json', '.css', '.scss', '*'],
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
-        '@src': path.resolve(__dirname, 'src'),
+        '@src': paths.appSrc,
       },
+      extensions: ['.ts', '.tsx', '.js', '.json', '.css', '.scss', '*'],
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
