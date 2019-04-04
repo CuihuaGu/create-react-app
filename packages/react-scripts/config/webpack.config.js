@@ -77,6 +77,22 @@ module.exports = function(webpackEnv) {
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
+    if (preProcessor == 'sass-loader') {
+      return [
+        MiniCssExtractPlugin.loader,
+        {
+          loader: 'typings-for-css-modules-loader',
+          options: {
+            modules: true,
+            namedExport: true,
+            camelCase: true,
+            sourceMap: false,
+          },
+        },
+        { loader: 'sass-loader', options: { sourceMap: false } },
+      ]
+    }
+
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
@@ -575,6 +591,13 @@ module.exports = function(webpackEnv) {
       // See https://github.com/facebook/create-react-app/issues/186
       isEnvDevelopment &&
         new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+
+      isEnvDevelopment &&
+        new MiniCssExtractPlugin({
+          filename: '[name].css',
+          chunkFilename: '[name].css',
+        }),
+
       isEnvProduction &&
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
